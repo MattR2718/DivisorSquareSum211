@@ -26,6 +26,21 @@ std::vector<int> getDivisors(int n){
     return divs;
 }
 
+auto factors(int n){
+    std::vector<int> divs;
+    int i = 1;
+    while (i * i <= n){
+        if (n % i == 0){
+            divs.push_back(i);
+            if (n/i != i){
+                divs.push_back(n/i);
+            }
+        }
+        i++;
+    }
+    return divs;
+}
+
 long long sumSquares(std::vector<int>& d){
     long long sum = 0;
     for(auto& n : d){
@@ -39,8 +54,31 @@ bool perfectSquare(long long& n){
     return n == sr*sr;
 }
 
+void testRun(int i, int *y){
+    long long sum = 0;
+    long long j = 1;
+    while (j * j <= i){
+        if (i % j == 0){
+            sum += j*j;
+            if (j * j != i){
+                sum += ((j/i) * (j/i));
+            }
+        }
+        j++;
+    }
+
+    double sr = round(sqrt((double) sum));
+    if((double)sum == sr*sr){
+        y[i] = 1;
+    } else {
+        y[i] = 0;
+    }
+}
+
 int main(int, char**) {
-    std::vector<int> d = getDivisors(91816);
+    //std::vector<int> d = getDivisors(91816);
+    int testNum = 31;
+    std::vector<int> d = factors(testNum);
     for(auto& n : d){
         std::cout<<n<<'\n';
     }
@@ -50,4 +88,8 @@ int main(int, char**) {
     std::cout<<"\n\n\n------------------\n\n\n";
     std::cout<<"Running Kernel\n";
     run();
+    std::cout<<"\n\n\n------------------\n\n\n";
+    std::cout<<"TEST Kernel\n";
+
+    //testRun(testNum);
 }
